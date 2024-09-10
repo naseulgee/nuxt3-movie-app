@@ -1,0 +1,37 @@
+{
+    "http.proxySupport": "off",
+    "terminal.integrated.localEchoLatencyThreshold": -1,
+    "terminal.integrated.localEchoEnabled": "off",
+    "workbench.colorTheme": "Dracula",
+    "editor.renderWhitespace": "all",
+    "editor.tabSize": 4,
+    "todohighlight.keywords": [
+        {
+            "text": "NOTE:",
+            "color": "#ffffff",
+            "backgroundColor": "deepskyblue",
+            "overviewRulerColor": "grey"
+        },
+        {
+            "text": "Vue:",
+            "color": "#ffffff",
+            "backgroundColor": "#42b883",
+            "overviewRulerColor": "grey"
+        },
+        {
+            "text": "Nuxt:",
+            "color": "#ffffff",
+            "backgroundColor": "#126842",
+            "overviewRulerColor": "grey"
+        },
+        {
+            "text": "★",
+            "color": "red",
+            "backgroundColor": "yellow",
+            "overviewRulerColor": "grey"
+        },
+    ],
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "always"
+    }
+}

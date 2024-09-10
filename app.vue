@@ -1,0 +1,18 @@
+<template>
+    <!-- Nuxt:
+        routes 설정의 meta 정보가 아닌,
+        각 페이지의 definePageMeta 의 layout 정보로 레이아웃 컴포넌트가 그려진다.
+        component 로 동적 컴포넌트 사용도 가능하나 레이아웃용으로는 적합하지 않다.
+    -->
+    <NuxtLayout>
+        <NuxtPage />
+    </NuxtLayout>
+    <!-- Vue:
+        routes/index.js 에서 meta 에 설정한 레이아웃 컴포넌트가 그려진다.
+        지정한 값이 없을 경우 BasicLayout 레이아웃 컴포넌트가 그려진다.
+        레이아웃 컴포넌트의 slot 부분으로 routes/index.js 에서 설정한 주소에 일치하는 컴포넌트가 그려진다.
+    -- >
+    <component :is="$route.meta.layout || 'BasicLayout'">
+        <RouterView />
+    </component> -->
+</template>

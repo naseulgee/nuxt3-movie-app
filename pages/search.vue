@@ -1,0 +1,4 @@
+<template>
+    <SearchForm />
+    <MovieList />
+</template>

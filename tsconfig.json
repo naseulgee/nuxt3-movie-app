@@ -1,0 +1,8 @@
+{
+    // https://nuxt.com/docs/guide/concepts/typescript
+    "extends": "./.nuxt/tsconfig.json",
+    "compilerOptions": { // JS를 사용하기 위해 추가하는 옵션
+        "allowJs": true, // ts파일에 js파일을 가져오게 함
+        "checkJs": false,// js에 타입스크립트 체크 제외
+    }
+}
