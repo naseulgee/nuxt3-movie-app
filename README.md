@@ -293,8 +293,8 @@ npm i -D cypress eslint-plugin-cypress
 2. test/unit
 3. test/unit/테스트할 파일 경로/테스트 파일.test.js
 4. test/e2e/테스트 시나리오 파일.test.js
-5. \__mocks\__/fileMock.js
-6. \__mocks\__/styleMock.js
+5. \_\_mocks\_\_/fileMock.js
+6. \_\_mocks\_\_/styleMock.js
 </details>
 <!-- end  : ================================================================ -->
 
@@ -387,7 +387,8 @@ npm i @vesp/nuxt-fontawesome
         "checkJs": false,// js에 타입스크립트 체크 제외
     }
 ```
-2. package.json 파일 수정
+2. nuxt.config.ts 파일 수정
+3. package.json 파일 수정
     - devDependencies 내용 붙여넣기 (아래 항목 제외)
         - @vue/compiler-sfc
         - copy-webpack-plugin : nuxt 내부적으로 웹팩을 사용
@@ -409,7 +410,7 @@ npm i @vesp/nuxt-fontawesome
         - vuex : pinia 사용
     - browserslist 내용 붙여넣기
 ### 파일 및 폴더 이관
-- /\__mocks\__       -> /\__mocks\__
+- /\_\_mocks\_\_       -> /\_\_mocks\_\_
 - /.netlify          -> 제거
 - /cypress           -> /cypress
 - /functions         -> /server/api
@@ -512,7 +513,6 @@ TODO: test, jest axios
     ```
 ### 내용 수정
 - /.env
-- /nuxt.config.ts
 - /app.vue
 - /assets/scss/main.scss
 - /plugins/플러그인.js
