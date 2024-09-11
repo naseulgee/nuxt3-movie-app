@@ -29,15 +29,11 @@ export default defineEventHandler(async (event) => {
         return res
     } catch (err) {
         // message 형태: [POST] "url": 코드3자리 오류메세지
-        console.log(err)
-        console.log(err.message)
-        console.log(err.toString())
-        const message = err.toString()
-        // console.log(err.statusCode)
-        const removeUrl = message.split(' ')[1]
+        const error = err.toString().split(' ')[1]
+        const removeUrl = error.split(' ')[1]
         const statusCode = removeUrl[4]
         const statusMessage = removeUrl[3]
-        // return setResponseStatus(statusCode, errMsg)
-        throw createError({ statusCode, statusMessage: message})
+        console.log(statusCode, statusMessage)
+        throw createError({ statusCode, statusMessage: statusMessage})
     }
 })
