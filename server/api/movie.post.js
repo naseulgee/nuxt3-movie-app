@@ -30,9 +30,8 @@ export default defineEventHandler(async (event) => {
     } catch (err) {
         // message 형태: [POST] "url": 코드3자리 오류메세지
         const error = err.toString().split(' ')[1]
-        const removeUrl = error.split(' ')[1]
-        const statusCode = removeUrl[4]
-        const statusMessage = removeUrl[3]
+        const statusCode = error[4]
+        const statusMessage = error[3]
         console.log(statusCode, statusMessage)
         throw createError({ statusCode, statusMessage: statusMessage})
     }
