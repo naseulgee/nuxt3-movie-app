@@ -18,9 +18,12 @@
 </template>
 
 <script setup>
+import metaImg from '@/images/common/meta-img.jpg'
+
 const config = useRuntimeConfig()
 const { BASE_URL } = config.public
 
+console.log(metaImg)
 /** Nuxt: 페이지별 반응성을 유지한 SEO 메타태그 정의
  * [참고] https://nuxt.com/docs/getting-started/seo-meta#useseometa
  */
@@ -31,7 +34,7 @@ useSeoMeta({
     description,
     ogTitle:       title,
     ogDescription: description,
-    ogImage:       BASE_URL + '/meta-img.jpg',
+    ogImage:       BASE_URL + metaImg,
     ogUrl:         BASE_URL,
 })
 </script>
