@@ -41,7 +41,42 @@
     </section>
 </template>
 
-<script>
+<script setup>
+import { mapState } from 'pinia'
+import { useAboutStore } from '~/store/about'
+
+const config = useRuntimeConfig()
+const { BASE_URL } = config.public
+
+const route = useRoute()
+const path  = route.path
+
+/** Nuxt: 페이지별 반응성을 유지한 SEO 메타태그 정의
+ * [참고] https://nuxt.com/docs/getting-started/seo-meta#useseometa
+ */
+const title       = 'About Author - Nuxt3 Movie App'
+const description = 'Seul Gee, Nuxt3 Movie App author'
+useSeoMeta({
+    title,
+    description,
+    ogTitle:       title,
+    ogDescription: description,
+    ogImage:       'https://blogpfthumb-phinf.pstatic.net/20161013_41/thwndglgkwk_1476353016081Mo1CG_PNG/avatar_profile.png',
+    ogUrl:         BASE_URL + path,
+})
+
+// 스토어 세팅
+const aboutStore = useAboutStore()
+const { name, email, phone, blog, image } = aboutStore
+
+// 이미지 세팅
+const imageLoading = ref(true)
+const { $loadImage } = useNuxtApp() // Nuxt: 플러그인 사용
+await $loadImage(image)
+imageLoading.value = false
+</script>
+
+<!-- <script>
 import { mapState } from 'pinia'
 import { useAboutStore } from '~/store/about'
 
@@ -62,9 +97,7 @@ export default {
     },
     methods: {
         async init() {
-            // Nuxt: 플러그인 사용 방식 변경
-            const { $loadImage } = useNuxtApp()
-            await $loadImage(this.image)
+            await this.$loadImage(this.image)
             this.imageLoading = false
         },
     },
@@ -72,7 +105,7 @@ export default {
         this.init()
     },
 }
-</script>
+</script> -->
 
 <style lang="scss" scoped>
 @keyframes _ani_floating { 100% { opacity: 1; transform: translateY(0); } }

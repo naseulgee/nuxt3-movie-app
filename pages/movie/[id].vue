@@ -82,86 +82,73 @@
     </section>
 </template>
 
-<script>
-import { mapState, mapActions } from 'pinia'
+<script setup>
 import { useMovieStore } from '~/store/movie'
 import { filename } from 'pathe/utils'
 
-export default {
-    data() {
-        return {
-            imageLoading: true,
-            noImage: false,
-        }
-    },
-    computed: {
-        /** NOTE: Vuex Helpers
-         * [참고 state    ] https://vuex.vuejs.org/guide/state.html#the-mapstate-helper
-         * [참고 getters  ] https://vuex.vuejs.org/guide/getters.html#the-mapgetters-helper
-         * [참고 mutations] https://vuex.vuejs.org/guide/mutations.html#committing-mutations-in-components
-         * [참고 actions  ] https://vuex.vuejs.org/guide/actions.html#dispatching-actions-in-components
-         * 
-         * store 에 등록된 데이터 및 함수들을 반복 사용 시 편하게 등록을 도와주는 함수
-         * 
-         * Helpers 종류
-         *  - mapState    , mapGetters: computed 영역에서 사용된다.
-         *     ★- mapState 가 가장 자주 사용되는 편이다.
-         *  - mapMutations, mapActions: methods 영역에서 사용된다.
-         *      - 어디에서 참조되는 함수인지 헷갈리기 때문에 Helper들 보다 직접 호출이 선호된다.
-         * 
-         * Helpers 사용
-         *  - ...Helpers('store 별칭', [ 호출할 변수 또는 함수명1, ... ])
-         */
-        ...mapState(useMovieStore, [
-            'loading',
-            'theMovie',
-        ]),
-        // Nuxt: require 사용 불가로 Vite 에서 제공하는 import.meta.glob 를 통해 이미지 전부 불러오기
-        ratingImages() {
-            const imgList = import.meta.glob('@/images/movie/*.png', { eager: true })
-            return Object.fromEntries(
-                Object.entries(imgList).map(([key, value]) => [filename(key), value.default])
-            )
-        }
-    },
-    methods: {
-        ...mapActions(useMovieStore, [
-            'searchMovieWithId',
-        ]),
-        reqDiffSizeImage(url, size = 700){
-            if(!url || url == 'N/A') { // url 이 없으면 404 이미지
-                this.imageLoading = false
-                this.noImage = true
-                return ''
-            }
-            // Nuxt: 플러그인 사용 방식 변경
-            const { $loadImage } = useNuxtApp()
-            // 사이즈 변환
-            let src = url.replace('SX300', 'SX' + size)
+const config = useRuntimeConfig()
+const { BASE_URL } = config.public
 
-            /** NOTE: 이미지 로딩 여부와 관련 없이 src 값이 반환되어야 함으로,
-             * await 가 아닌 then 을 사용하여 별개의 로직으로 실행시켜야 한다.
-            */
-            $loadImage(src)
-                .then(() => { // 메모리상 이미지가 로딩이 완료될 때 까지 대기 후
-                    this.noImage = false
-                })
-                .catch(error => { // 이미지가 없는 경우 예외처리
-                    console.error(error)
-                    this.noImage = true
-                })
-                .finally(() => {
-                    this.imageLoading = false // 로딩 종료
-                })
-            return src // 대기와 상관 없이 사이즈 변환 주소 리턴
-        }
-    },
-    mounted(){ // Nuxt: created 는 서버 사이드에서 렌더링이 되기 전에 실행이 되버린다
-        // methods에 mapActions로 등록한 함수 호출
-        useMovieStore().searchMovieWithId({
-            id : this.$route.params.id // routes/index.js 에서 설정한 콜론(:) 뒤 동적 파라미터 변수명
+const route = useRoute()
+const path  = route.path
+
+// 영화 정보
+const movieStore = useMovieStore()
+await movieStore.searchMovieWithId({
+    id : route.params.id // routes/index.js 에서 설정한 콜론(:) 뒤 동적 파라미터 변수명
+})
+const { loading, theMovie } = movieStore
+
+/** Nuxt: 페이지별 반응성을 유지한 SEO 메타태그 정의
+ * [참고] https://nuxt.com/docs/getting-started/seo-meta#useseometa
+ */
+const title       = `Movie:: ${theMovie.Title} - Nuxt3 Movie App`
+const description = theMovie.Plot
+useSeoMeta({
+    title,
+    description,
+    ogTitle:       title,
+    ogDescription: description,
+    ogImage:       theMovie.Poster,
+    ogUrl:         BASE_URL + path,
+})
+
+// images
+const imageLoading = ref(true)
+const noImage      = ref(false)
+// Nuxt: require 사용 불가로 Vite 에서 제공하는 import.meta.glob 를 통해 이미지 전부 불러오기
+const ratingImages = computed(() => {
+    const imgList = import.meta.glob('@/images/movie/*.png', { eager: true })
+    return Object.fromEntries(
+        Object.entries(imgList).map(([key, value]) => [filename(key), value.default])
+    )
+})
+function reqDiffSizeImage(url, size = 700) {
+    if(!url || url == 'N/A') { // url 이 없으면 404 이미지
+        imageLoading.value = false
+        noImage.value = true
+        return ''
+    }
+    // Nuxt: 플러그인 사용 방식 변경
+    const { $loadImage } = useNuxtApp()
+    // 사이즈 변환
+    let src = url.replace('SX300', 'SX' + size)
+
+    /** NOTE: 이미지 로딩 여부와 관련 없이 src 값이 반환되어야 함으로,
+     * await 가 아닌 then 을 사용하여 별개의 로직으로 실행시켜야 한다.
+    */
+    $loadImage(src)
+        .then(() => { // 메모리상 이미지가 로딩이 완료될 때 까지 대기 후
+            noImage.value = false
         })
-    },
+        .catch(error => { // 이미지가 없는 경우 예외처리
+            console.error(error)
+            noImage.value = true
+        })
+        .finally(() => {
+            imageLoading.value = false // 로딩 종료
+        })
+    return src // 대기와 상관 없이 사이즈 변환 주소 리턴
 }
 </script>
 

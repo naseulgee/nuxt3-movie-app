@@ -20,26 +20,28 @@ export default defineNuxtConfig({
     runtimeConfig: { // 환경변수 키 등록. .env 에 명시된 NUXT_ 를 제외하고 변수명: '' 로 입력 시 자동 등록된다.
         // 클라이언트측에서 사용할 키 등록. .env 에 명시된 NUXT_PUBLIC_ 를 제외하고 변수명: '' 로 입력 시 자동 등록된다.
         public: {
-            OMDB_API_KEY: ''
+            OMDB_API_KEY: '',
+            BASE_URL    : '',
         }
     },
     app: {
         // index.html
         head: {
-            title: 'Nuxt3 Movie App',
+            // title: 'Nuxt3 Movie App',
             htmlAttrs: {
                 lang: 'en'
             },
-            // config 에 정의한 것은 반응형 데이터를 제공하지 않아 App.vue 파일에 useHead 로 선언함
+            // config 에 정의한 것은 반응형 데이터를 제공하지 않아 고정된 값을 가진 정보만 선언한다
+            // 동적 정보는 App.vue 파일과 각 페이지 파일에 useHead 또는 useSeoMeta 로 선언한다
             meta: [
                 { charset: 'utf-8' },
                 { name: 'viewport'               , content: 'width=device-width, initial-scale=1.0' },
                 { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
-                { property: 'description'        , content: 'The OMDb API is a RESTful web service to obtain movie information, all content and images on the site are contributed and maintained by our users.' },
                 { property: 'og:type'            , content: 'website' },
                 { property: 'og:site_name'       , content: 'Nuxt3 Movie App' },
-                { property: 'og:title'           , content: 'Nuxt3 Movie App' },
-                { property: 'og:description'     , content: 'The OMDb API is a RESTful web service to obtain movie information, all content and images on the site are contributed and maintained by our users.' },
+                // { property: 'description'        , content: '' },
+                // { property: 'og:title'           , content: '' },
+                // { property: 'og:description'     , content: '' },
                 // { property: 'og:image'           , content: '' },
                 // { property: 'og:url'             , content: '' },
             ],

@@ -442,7 +442,6 @@ npm i @vesp/nuxt-fontawesome
 - index.html         -> nuxt.config.ts 로 내용 이관
 - /jest.config.js    -> /jest.config.js
 - /webpack.config.js -> nuxt.config.ts 로 내용 이관
-TODO: test, jest axios
 ### 명칭 변경
 - component  -> NuxtLayout (레이아웃 용도만)
 - RouterLink -> NuxtLink
@@ -519,6 +518,39 @@ TODO: test, jest axios
 - /store/스토어.vue
 - /server/api/이름.방식.js
 
-## Heroku 를 이용한 서버 배포
+## SEO 작업
+1. 정적 정보는 nuxt.config.ts 파일에 app.head 내부에 선언한다
+2. 동적 정보는 App.vue 파일과 각 페이지 파일에 useHead 또는 useSeoMeta 로 선언한다
+
+## ~~Heroku~~ Koyeb 를 이용한 서버 배포
+
+### 설정 파일 수정 및 생성
+1. package.json 파일 내용 수정
+```
+{
+    ....
+    "scripts": {
+        ....
+        "start": "node .output/server/index.mjs"
+    },
+    "engines": {
+        "node": "20.x"
+    },
+    ....
+}
+```
+### Koyeb 환경변수 세팅
+1. Site configuration > Environment variables 클릭
+2. Add a variable 버튼 클릭
+3. .env 파일 내용대로 Key, Values 값 입력
+### Koyeb 배포
+1. <a href="https://app.koyeb.com/" target="_blank">사이트 접속</a>
+2. Create Service > Github 클릭
+3. Install Github app 클릭
+4. 연결할 Github 계정 및 레포지토리 선택
+5. 연동된 레포지토리 선택
+6. CPU Eco > Free 선택 > Next 버튼 클릭
+7. Edit environment variables 에 프로젝트의 환경변수 입력 및 server_preset=koyeb 추가
+8. 배포중인 서비스 선택 > 상태 Healthy 여부 확인 후 Public URL 클릭
 </detail>
 <!-- end  : ================================================================ -->

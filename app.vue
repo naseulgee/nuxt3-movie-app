@@ -16,3 +16,22 @@
         <RouterView />
     </component> -->
 </template>
+
+<script setup>
+const config = useRuntimeConfig()
+const { BASE_URL } = config.public
+
+/** Nuxt: 페이지별 반응성을 유지한 SEO 메타태그 정의
+ * [참고] https://nuxt.com/docs/getting-started/seo-meta#useseometa
+ */
+const title       = 'Nuxt3 Movie App'
+const description = 'The OMDb API is a RESTful web service to obtain movie information, all content and images on the site are contributed and maintained by our users.'
+useSeoMeta({
+    title,
+    description,
+    ogTitle:       title,
+    ogDescription: description,
+    ogImage:       'https://prod-files-secure.s3.us-west-2.amazonaws.com/cd1ea652-8842-4428-9875-0ded17d5e194/3f2b66d3-ad90-46ba-8d0c-a98e8f185fde/web_mockup.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240911%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240911T115833Z&X-Amz-Expires=3600&X-Amz-Signature=cb30def518cf934b1c7f784d3d79c5c601fcff747bd5c04cf0847bb008fe5844&X-Amz-SignedHeaders=host&x-id=GetObject',
+    ogUrl:         BASE_URL,
+})
+</script>
