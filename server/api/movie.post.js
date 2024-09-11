@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
     // [참고] https://www.omdbapi.com/
     const { title, type, year, page, id } = payload
     const url = id
-        ? `https://www.omdbapi.com/?apikey=${OMDB_API_KEY}a&i=${id}`
+        ? `https://www.omdbapi.com/?apikey=${OMDB_API_KEY}&i=${id}`
         : `https://www.omdbapi.com/?apikey=${OMDB_API_KEY}a&s=${title}&type=${type}&y=${year}&page=${page}`
 
     /** NOTE: 함수 자체가 비동기로 동작되기 때문에,
@@ -24,15 +24,16 @@ export default defineEventHandler(async (event) => {
         const res = await $fetch(url) // Nuxt: useAsyncData 쓰면 오류남
         // 상태코드 200 이나, 에러인 경우 처리
         if(res.Error) {
-            throw createError({ statusCode: 400, statusMessage: res.Error })
+            console.log("res.Error::: ", res.Error)
+            throw createError({ statusCode: 400, statusMessage: 'res.Error [POST] ' + 400 + ' ' + res.Error })
         }
         return res
     } catch (err) {
         // message 형태: [POST] "url": 코드3자리 오류메세지
-        const error = err.toString().split(' ')
-        const statusCode = error[3]
-        const statusMessage = error[4]
-        console.log(statusCode, statusMessage)
+        const error = err.toString()
+        const statusCode = error.split(' ')[3]
+        const statusMessage = error.split(' '+statusCode+' ')[1]
+        console.log("catch err::: ", statusCode, statusMessage)
         throw createError({ statusCode, statusMessage: statusMessage})
     }
 })
