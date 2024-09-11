@@ -172,10 +172,9 @@ async function _fetchMovie(payload) {
         body: payload,
     }).then(res => {
         return { data: res }
-    }).catch(({ message }) => {
-        console.log(message)
+    }).catch(({ statusMessage }) => {
         throw createError({
-            message: message.split(': ')[1].slice(4),
+            message: statusMessage,
         })
     })
     // return await axios.post('/.netlify/functions/movie', payload)
