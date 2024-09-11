@@ -11,7 +11,7 @@
     "postinstall": "nuxt prepare"
   },
   "engines": {
-    "node": "20.15.1"
+    "node": "20.x"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
