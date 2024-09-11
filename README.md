@@ -393,7 +393,9 @@ npm i @vesp/nuxt-fontawesome
         - @vue/compiler-sfc
         - copy-webpack-plugin : nuxt 내부적으로 웹팩을 사용
         - css-loader
+        - cypress
         - dotenv-webpack
+        - eslint-plugin-cypress
         - file-loader
         - html-webpack-plugin
         - netlify-cli : 서버를 구축하기 때문에 서버리스 함수를 사용할 필요가 없음
@@ -470,6 +472,7 @@ npm i @vesp/nuxt-fontawesome
     </template>
     ```
 - require(이미지경로) -> /movie/[id].vue 참고
+- const { 변수명 } = require(모듈) -> import { 변수명 } from '모듈'
 - store 관련
     - 예시
     ```
