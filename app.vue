@@ -31,7 +31,7 @@ useSeoMeta({
     description,
     ogTitle:       title,
     ogDescription: description,
-    ogImage:       'https://prod-files-secure.s3.us-west-2.amazonaws.com/cd1ea652-8842-4428-9875-0ded17d5e194/3f2b66d3-ad90-46ba-8d0c-a98e8f185fde/web_mockup.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240911%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240911T115833Z&X-Amz-Expires=3600&X-Amz-Signature=cb30def518cf934b1c7f784d3d79c5c601fcff747bd5c04cf0847bb008fe5844&X-Amz-SignedHeaders=host&x-id=GetObject',
+    ogImage:       BASE_URL + '/meta-img.jpg',
     ogUrl:         BASE_URL,
 })
 </script>
